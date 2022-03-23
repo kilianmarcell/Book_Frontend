@@ -1,14 +1,23 @@
 <template>
-  <Konyvek/>
+  <div id="page">
+    <Books/>
+  </div>
 </template>
 
 <script>
-  import Konyvek from './components/Konyvek.vue'
+  import Books from './components/Books.vue'
 
 export default {
   name: 'App',
   components: {
-    Konyvek
+    Books
   }
 }
 </script>
+
+<style>
+  #page {
+    background: #222629;
+    color: white;
+  }
+</style>
