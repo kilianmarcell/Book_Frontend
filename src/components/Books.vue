@@ -1,13 +1,13 @@
 <template>
     <p class="fs-1 pt-5 ps-5">Petrik Könyvtár Nyilvántartó</p>
     <div class="row p-5">
-        <div v-for="b in books" :key="b.id" class="border border-white col-xl-4 col-md-6 col-12">
+        <div v-for="b in books" :key="b.id" class="border border-dark col-xl-4 col-md-6 col-12 p-5">
             <div>
                 <p class="fs-2">{{ b.title }}</p>
                 <p class="fs-2">{{ b.author }}</p>
                 <p class="fs-4">Kiadási év: {{ b.publish_year }}</p>
                 <p class="fs-4">Hossz: {{ b.page_count }} oldal</p>
-                 <img :src="getImgUrl(b.author)">
+                 <img class="text-center d-block mx-auto" :src="getImgUrl(b.author)">
             </div>
         </div>
     </div>
@@ -42,8 +42,12 @@ export default {
         },
 
         getImgUrl(pet) {
-            var images = require.context('../assets/szerzok/', false, /\.jpg$/)
-            return images('./' + pet + ".jpg")
+            try {
+                var images = require.context('../assets/szerzok/', false, /\.jpg$/)
+                return images('./' + pet + ".jpg")
+            } catch (error) {
+                console.log(error)
+            }
         }
     },
     

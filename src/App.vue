@@ -16,8 +16,4 @@ export default {
 </script>
 
 <style>
-  #page {
-    background: #222629;
-    color: white;
-  }
 </style>
