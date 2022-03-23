@@ -10,6 +10,25 @@
                  <img class="text-center d-block mx-auto" :src="getImgUrl(b.author)">
             </div>
         </div>
+        <div class="border border-dark w-100 mt-5 p-5 d-flex flex-column m-auto fs-3">
+            <div class="row w-50 m-auto p-2">
+                <p class="w-50">Cím:</p>
+                <input v-model="this.book.title" class="w-50" type="text">
+            </div>
+            <div class="row w-50 m-auto p-2">
+                <p class="w-50">Szerző:</p>
+                <input v-model="this.book.author" class="w-50" type="text">
+            </div>
+            <div class="row w-50 m-auto p-2">
+                <p class="w-50">Kiadási év:</p>
+                <input v-model="this.book.publish_year" class="w-50" type="text">
+            </div>
+            <div class="row w-50 m-auto p-2">
+                <p class="w-50">Hossz:</p>
+                <input v-model="this.book.page_count" class="w-50" type="text">
+            </div>
+            <button class="m-auto btn btn-success w-50 fs-3" @click="newBook" :disabled="saving" v-if="!add_new">Hozzáadás</button>
+        </div>
     </div>
 </template>
 
@@ -26,7 +45,7 @@ export default {
                 title: "",
                 author: "",
                 publish_year: null,
-                page_count: null,
+                page_count: null
             },
             add_new: false,
             saving: false
@@ -46,8 +65,28 @@ export default {
                 var images = require.context('../assets/szerzok/', false, /\.jpg$/)
                 return images('./' + pet + ".jpg")
             } catch (error) {
-                console.log(error)
             }
+        },
+    
+        async newBook() {
+            this.saving = true
+            await axios
+                .post('http://127.0.0.1:8000/api/books', this.book)
+                .catch(error => console.log(error))
+            await this.loadData()
+            
+            this.saving = false
+            this.resetForm()
+        },
+
+        resetForm() {
+            this.book = {
+                title: "",
+                author: "",
+                publish_year: null,
+                page_count: null
+            },
+            this.add_new = false
         }
     },
     
